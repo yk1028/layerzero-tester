@@ -4,9 +4,9 @@
 - [ ] add layerzero service
     - [x] sendFrom
     - [ ] balnace
-- [ ] manage chain info and private key
-    - [ ] chain info
-    - [ ] private key
+- [x] manage chain info and private key
+    - [x] chain info
+    - [x] private key
 - [ ] commands
     - [ ] sendFrom
     - [ ] balance

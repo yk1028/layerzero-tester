@@ -18,8 +18,16 @@ export class LayerZeroService {
         this.oftv2Contract = new this.web3.eth.Contract(LayerZeroConstants.OFTV2_ABI, chainInfo.oftv2ContractAddress)
     }
 
+    async send(dstChainService: LayerZeroService, amount: string) {
+        await this.sendFrom(
+            dstChainService.chainInfo.chainId,
+            dstChainService.chainInfo.signerAddress,
+            amount
+        )
+    }
+
     async sendFrom(remoteChainId: string, toAddress: string, amount: string) {
-        if (this.gasPrice == null){
+        if (this.gasPrice == null) {
             this.gasPrice = await this.web3.eth.getGasPrice();
         }
 
@@ -47,13 +55,13 @@ export class LayerZeroService {
 
         const estimatedGas = await sendFrom.estimateGas({ from: this.chainInfo.signerAddress, value: remoteChainEstimateFee })
 
-        const result = await sendFrom.send({ 
-            from : this.chainInfo.signerAddress,
+        const result = await sendFrom.send({
+            from: this.chainInfo.signerAddress,
             value: remoteChainEstimateFee,
             gas: estimatedGas,
             gasPrice: this.gasPrice
         })
-    
+
         console.log(result)
     }
 
