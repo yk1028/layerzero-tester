@@ -1,9 +1,13 @@
 {
-    "include": ["src"], // src에 있는 모든 typescript 파일을 확인하고, 컴파일에 포함
+    "include": ["src"],
     "compilerOptions": {
-        "outDir": "build",
+        "outDir": "dist",
         "target": "ES6",
         "lib": ["ES6", "DOM"],
-        "strict": true
+        "strict": true,
+        "module": "commonjs",
+        "sourceMap": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node"
       } 
   }
