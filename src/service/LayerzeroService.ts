@@ -20,7 +20,7 @@ export class LayerZeroService {
 
     async send(dstChainService: LayerZeroService, amount: string) {
         await this.sendFrom(
-            dstChainService.chainInfo.chainId,
+            dstChainService.chainInfo.layerzeroChainId,
             dstChainService.chainInfo.signerAddress,
             amount
         )
@@ -31,10 +31,12 @@ export class LayerZeroService {
             this.gasPrice = await this.web3.eth.getGasPrice();
         }
 
+        const sharedAmount = amount + "000000000000"
+
         const remoteChainEstimateFee = (await this.oftv2Contract.methods.estimateSendFee(
             remoteChainId,
             this.encodeToAddress(toAddress),
-            amount,
+            sharedAmount,
             false,
             LayerZeroConstants.DEFAULT_ADAPTER_PARMAS
         ).call())[0]
@@ -49,24 +51,26 @@ export class LayerZeroService {
             this.chainInfo.signerAddress,
             remoteChainId,
             this.encodeToAddress(toAddress),
-            amount,
+            sharedAmount,
             callParams
         )
 
         const estimatedGas = await sendFrom.estimateGas({ from: this.chainInfo.signerAddress, value: remoteChainEstimateFee })
 
-        const result = await sendFrom.send({
+        const txResult = await sendFrom.send({
             from: this.chainInfo.signerAddress,
             value: remoteChainEstimateFee,
             gas: estimatedGas,
             gasPrice: this.gasPrice
         })
 
-        console.log(result)
+        console.log("remote chain estimated fee: " + remoteChainEstimateFee + "wei")
+        console.log("from: " + txResult.from)
+        console.log("to: " + txResult.to)
+        console.log("txHash: " + txResult.transactionHash)
     }
 
     private encodeToAddress(toAddress: string): string {
         return ethers.AbiCoder.defaultAbiCoder().encode(["address"], [toAddress])
     }
-
 }

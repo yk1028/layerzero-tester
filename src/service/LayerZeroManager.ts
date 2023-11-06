@@ -1,5 +1,5 @@
 import { ChainInfo } from "./ChainInfo"
-import { LayerZeroService } from "./LayerzeroService";
+import { LayerZeroService } from "./LayerZeroService";
 
 type ChainServiceList = {
     [name: string]: LayerZeroService
@@ -7,13 +7,13 @@ type ChainServiceList = {
 
 export class LayerZeroManager {
 
+    private static CHAIN_INFO = require("../../info/.chain_info.json")
+
     private chainServiceList: ChainServiceList = {}
 
     constructor() {
-        const chainInfo = require("../.chain_info.json")
-
-        for (const chain in chainInfo) {
-            const info = chainInfo[chain]
+        for (const chain in LayerZeroManager.CHAIN_INFO) {
+            const info = LayerZeroManager.CHAIN_INFO[chain]
 
             this.chainServiceList[chain] = new LayerZeroService(
                 new ChainInfo(
@@ -28,7 +28,7 @@ export class LayerZeroManager {
         }
     }
 
-    send(srcChain: string, dstChain: string, amount: string) {
+    async send(srcChain: string, dstChain: string, amount: string) {
         const srcService = this.chainServiceList[srcChain]
         const dstService = this.chainServiceList[dstChain]
 
@@ -42,6 +42,6 @@ export class LayerZeroManager {
             return
         }
 
-        srcService.send(dstService, amount)
+        await srcService.send(dstService, amount)
     }
 }

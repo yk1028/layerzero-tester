@@ -8,12 +8,13 @@
     - [x] chain info
     - [x] private key
 - [ ] commands
-    - [ ] sendFrom
+    - [x] sendFrom
     - [ ] balance
+- [ ] cube oftv2 mint
 - [ ] mainnet
 
 ## Getting start
 ``` shell
 npm i
-npm start
+ts-node src/index.ts -h
 ```
