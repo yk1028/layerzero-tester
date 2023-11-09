@@ -38,6 +38,7 @@ const main = async () => {
         .command('balance')
         .description('query signer balance by chain')
         .option('-c, --chain <chain>', 'chain name')
+        .option('-t, --to <address>', 'address to query balance (default: destination chain signer)')
         .action(async (options) => {
             if (Object.keys(options).length === 0) {
                 await lzController.balanceAll()

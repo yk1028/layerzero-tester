@@ -20,11 +20,11 @@ ts-node src/index.ts -h
 ## Commands
 - send
   ``` shell
-  ts-node src/index.ts send <source chain> <destination chain> [-a amount]
+  ts-node src/index.ts send <source chain> <destination chain> [-a amount] [-t address]
   ```
   - `cube`에서 보내거나 `cube`로 보내는 전송만 가능 ( ex. `cube` -> `other chain` / `other chain` -> `cube`)
-  - `-a, --amount <amount>` amount 지정 가능
-  - `-t, --to <address>` target address 지정 가능
+  - `-a, --amount <amount>` amount 지정 가능 (defualt: 0.000001 XLMT)
+  - `-t, --to <address>` target address 지정 가능 (defualt: destination chain signer address)
 
 - mint
   ``` shell
@@ -35,9 +35,10 @@ ts-node src/index.ts -h
 
 - balance
   - chain별 등록된 signer의 native token과 oftv2 token balance 조회 기능
-  - `-c, --chain <chain>` 조회 chain 지정 가능
+  - `-c, --chain <chain>` 조회 chain 지정 가능 (defualt: 전체 chains)
+  - `-t, --to <address>` target address 지정 가능 (defualt: destination chain signer address)
   ``` shell
-  ts-node src/index.ts balance [-c chain]
+  ts-node src/index.ts balance [-c chain] [-t address]
   ```
 
 
@@ -115,5 +116,6 @@ ts-node src/index.ts -h
     - [x] private key
 - [x] docs
 - [x] send to target address
+- [x] query to target address
 - [ ] add new chain process
 - [ ] mainnet

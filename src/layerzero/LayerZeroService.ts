@@ -75,9 +75,13 @@ export class LayerZeroService {
     }
 
     public async balance() {
-        const nativeBalance = await this.web3.eth.getBalance(this.signerAccount)
+        await this.balanceOf(this.signerAccount)
+    }
+
+    public async balanceOf(address: string) {
+        const nativeBalance = await this.web3.eth.getBalance(address)
         const oftv2Symbol = await this.oftv2Contract.methods.symbol().call();
-        const oftv2Balance = await this.oftv2Contract.methods.balanceOf(this.signerAccount).call();
+        const oftv2Balance = await this.oftv2Contract.methods.balanceOf(address).call();
 
         LayerZeroPrinter.printBalance(
             this.chainInfo.chainName,

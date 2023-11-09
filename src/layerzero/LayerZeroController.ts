@@ -60,6 +60,12 @@ export class LayerZeroController {
         await srcService.balance()
     }
 
+    async balanceOf(chainName: string, address: string) {
+        const chainService = this.getChainService(chainName)
+
+        await chainService.balanceOf(address)
+    }
+
     async balance(chainName: string) {
         const chainService = this.getChainService(chainName)
 
