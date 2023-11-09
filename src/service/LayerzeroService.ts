@@ -60,16 +60,16 @@ export class LayerZeroService {
             gasPrice: this.gasPrice
         })
 
-        LayerZeroPrinter.printSend(txResult, remoteChainEstimateFee)
-        await this.getSignerBalance()
-        await dstChainService.getSignerBalance()
+        LayerZeroPrinter.printSend(this.chainInfo.chainName, dstChainService.chainInfo.chainName, txResult, remoteChainEstimateFee)
+
+        await this.printSignerBalance()
     }
 
     private encodeToAddress(toAddress: string): string {
         return ethers.AbiCoder.defaultAbiCoder().encode(["address"], [toAddress])
     }
 
-    public async getSignerBalance() {
+    public async printSignerBalance() {
         const nativeBalance = await this.web3.eth.getBalance(this.chainInfo.signerAddress)
         const oftv2Symbol = await this.oftv2Contract.methods.symbol().call();
         const oftv2Balance = await this.oftv2Contract.methods.balanceOf(this.chainInfo.signerAddress).call();

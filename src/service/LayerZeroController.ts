@@ -59,12 +59,12 @@ export class LayerZeroController {
             return
         }
 
-        await chainService.getSignerBalance()
+        await chainService.printSignerBalance()
     }
 
     async balanceAll() {
         for(const service in this.chainServiceList) {
-            this.chainServiceList[service].getSignerBalance()
+            this.chainServiceList[service].printSignerBalance()
         }
     }
 }

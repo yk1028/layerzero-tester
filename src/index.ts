@@ -23,7 +23,7 @@ const main = async () => {
         .command('send')
         .argument('<source chain>', 'srouce chain name')
         .argument('<destination chain>', 'srouce chain name')
-        .option('-a, --amount', 'token amount (defualt: 1)', "1")
+        .option('-a, --amount <amount>', 'token amount (defualt: 1)', "1")
         .action(async (srcChain, dstChain, options) => {
             await lzController.send(srcChain, dstChain, options.amount)
         });
