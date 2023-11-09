@@ -18,3 +18,9 @@
 npm i
 ts-node src/index.ts -h
 ```
+
+## Command
+- send
+```
+ts-node src/index.ts <source chain> <destination chain> [-a amount]
+```
