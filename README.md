@@ -1,8 +1,8 @@
 # LayerZero testing tool
 layerzero를 통한 cube와 다른 chain간 간편 전송 테스트 도구, cube에서 발행한 OFTV2로 테스트 진행
 
-## Getting start
-- `info/.private_key` 위치에 chain별 **signer privatekey** 등록 필요
+## Private key
+- `info/.private_key.json` 위치에 chain별 **signer privatekey** 등록 필요
 - example
     ```
     {
@@ -11,11 +11,11 @@ layerzero를 통한 cube와 다른 chain간 간편 전송 테스트 도구, cube
         "fuji": "{fuji signer private key}"
     }
     ```
-- install and help
-    ``` shell
-    npm i
-    ts-node src/index.ts -h
-    ```
+## Getting start
+``` shell
+npm i
+ts-node src/index.ts -h
+```
 
 ## Commands
 - send
