@@ -39,12 +39,12 @@ export class LayerZeroController {
         const dstService = this.chainServiceList[dstChain]
 
         if (!srcService) {
-            console.error("LZ Tester: not found source chain service")
+            console.error("LZ Tester: not found source chain service.")
             return
         }
 
         if (!dstService) {
-            console.error("LZ Tester: not found destination chain service")
+            console.error("LZ Tester: not found destination chain service.")
             return
         }
 
@@ -55,10 +55,16 @@ export class LayerZeroController {
         const chainService = this.chainServiceList[chain]
 
         if (!chainService) {
-            console.error("LZ Tester: not found chain service")
+            console.error("LZ Tester: not found chain service.")
             return
         }
 
         await chainService.getSignerBalance()
+    }
+
+    async balanceAll() {
+        for(const service in this.chainServiceList) {
+            this.chainServiceList[service].getSignerBalance()
+        }
     }
 }
