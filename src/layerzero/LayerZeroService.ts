@@ -10,7 +10,7 @@ export class LayerZeroService {
     private web3
     private oftv2Contract
     private signerAccount
-    
+
     private gasPrice = null
 
     constructor(private chainInfo: ChainInfo) {
@@ -23,14 +23,16 @@ export class LayerZeroService {
         this.signerAccount = this.web3.eth.accounts.privateKeyToAccount(chainInfo.signerPrivateKey).address
     }
 
-    async send(dstChainService: LayerZeroService, amount: string) {
+    public async send(dstChainService: LayerZeroService, amount: string) {
+        await this.sendToAddress(dstChainService, dstChainService.signerAccount, amount)
+    }
 
+    public async sendToAddress(dstChainService: LayerZeroService, toAddress: string, amount: string) {
         if (this.gasPrice == null) {
             this.gasPrice = await this.web3.eth.getGasPrice();
         }
 
         const remoteChainId = dstChainService.chainInfo.layerzeroChainId
-        const toAddress = dstChainService.signerAccount
 
         const sharedAmount = amount + "000000000000"
 
@@ -66,8 +68,6 @@ export class LayerZeroService {
         })
 
         LayerZeroPrinter.printSend(this.chainInfo.chainName, dstChainService.chainInfo.chainName, txResult, remoteChainEstimateFee)
-
-        await this.balance()
     }
 
     private encodeToAddress(toAddress: string): string {
@@ -85,8 +85,8 @@ export class LayerZeroService {
             this.chainInfo.nativeSymbol,
             nativeBalance,
             oftv2Symbol,
-            oftv2Balance  
-         );
+            oftv2Balance
+        );
     }
 
     public async mint(amount: string) {
@@ -111,7 +111,5 @@ export class LayerZeroService {
         const oftv2Symbol = await this.oftv2Contract.methods.symbol().call();
 
         LayerZeroPrinter.printMint(this.chainInfo.chainName, amount, oftv2Symbol, txResult)
-
-        await this.balance()
     }
 }

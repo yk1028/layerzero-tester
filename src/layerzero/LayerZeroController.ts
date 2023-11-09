@@ -22,7 +22,7 @@ export class LayerZeroController {
         for (const chain in LayerZeroController.CHAIN_INFO) {
             const info = LayerZeroController.CHAIN_INFO[chain]
             const privateKey = LayerZeroController.PRIVATEKY_INFO[chain]
-            
+
             this.chainServiceList[chain] = new LayerZeroService(
                 new ChainInfo(
                     chain,
@@ -37,11 +37,27 @@ export class LayerZeroController {
         }
     }
 
+    private getChainService(chainName: string): LayerZeroService {
+        if (!(chainName in this.chainServiceList)) {
+            throw Error(`LZ Tester: not found '${chainName}' chain service.`)
+        }
+        return this.chainServiceList[chainName]
+    }
+
     async send(srcChainName: string, dstChainName: string, amount: string) {
         const srcService = this.getChainService(srcChainName)
         const dstService = this.getChainService(dstChainName)
 
         await srcService.send(dstService, amount)
+        await srcService.balance()
+    }
+
+    async sendToAddress(srcChainName: string, dstChainName: string, toAddress: string, amount: string) {
+        const srcService = this.getChainService(srcChainName)
+        const dstService = this.getChainService(dstChainName)
+
+        await srcService.sendToAddress(dstService, toAddress, amount)
+        await srcService.balance()
     }
 
     async balance(chainName: string) {
@@ -51,21 +67,15 @@ export class LayerZeroController {
     }
 
     async balanceAll() {
-        for(const service in this.chainServiceList) {
+        for (const service in this.chainServiceList) {
             this.chainServiceList[service].balance()
         }
     }
 
-    async mint(chainName: string, amount:string) {
+    async mint(chainName: string, amount: string) {
         const chainService = this.getChainService(chainName)
 
         await chainService.mint(amount)
-    }
-
-    private getChainService(chainName: string): LayerZeroService{
-        if (!(chainName in this.chainServiceList)) {
-            throw Error(`LZ Tester: not found '${chainName}' chain service.`)
-        }
-        return this.chainServiceList[chainName]
+        await chainService.balance()
     }
 }

@@ -1,8 +1,8 @@
 const Web3 = require('web3')
 
 export class LayerZeroPrinter {
-    public static printSend(fromChainName: string, toChainName:string, txResult: any, remoteChainEstimateFee: any) {
-        console.log(`Remote chain estimated fee: ${remoteChainEstimateFee} wei\n`)
+    public static printSend(fromChainName: string, toChainName: string, txResult: any, remoteChainEstimateFee: any) {
+        console.log(`Remote chain estimated fee: ${Web3.utils.fromWei(remoteChainEstimateFee, 'ether')} eth / ${remoteChainEstimateFee} wei\n`)
         console.log(`[${fromChainName}] from: ${txResult.from}`)
         console.log(`[${toChainName}] to: ${txResult.to}`)
         console.log(`TxHash: ${txResult.transactionHash}\n`)

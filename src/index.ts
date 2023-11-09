@@ -13,23 +13,30 @@ const main = async () => {
     const lzController = new LayerZeroController()
 
     program
-        .name("lztester")
+        .name('lztester')
         .version('1.0.0')
         .allowExcessArguments(false)
-        .configureHelp({ subcommandTerm: (cmd) => cmd.name() + ' ' + cmd.usage() })
-        .description("Send oftv2 token from source chain to desination chain by layerzero.")
-    
+        .configureHelp({ subcommandTerm: (cmd) => cmd.name() + ' ' })
+        .description('Send oftv2 token from source chain to desination chain by layerzero.')
+
     program
         .command('send')
+        .description('send source chain to destination chain. (cube <-> bsc-testnet, fuji)')
         .argument('<source chain>', 'srouce chain name')
         .argument('<destination chain>', 'srouce chain name')
-        .option('-a, --amount <amount>', 'token amount (defualt: 1)', "1")
+        .option('-a, --amount <amount>', 'token amount ', '1')
+        .option('-t, --to <address>', 'address to receive token (default: destination chain signer)')
         .action(async (srcChain, dstChain, options) => {
-            await lzController.send(srcChain, dstChain, options.amount)
+            if (options.to) {
+                await lzController.sendToAddress(srcChain, dstChain, options.to, options.amount)
+            } else {
+                await lzController.send(srcChain, dstChain, options.amount)
+            }
         });
 
     program
         .command('balance')
+        .description('query signer balance by chain')
         .option('-c, --chain <chain>', 'chain name')
         .action(async (options) => {
             if (Object.keys(options).length === 0) {
@@ -41,12 +48,12 @@ const main = async () => {
 
     program
         .command('mint')
-        .description('Curruently mint is only available on \'cube\'.')
-        .option('-a, --amount <amout>', 'mint amount (default: 1.000000000000000000)', "1000000000000000000")
+        .description('curruently mint is only available on \'cube\'')
+        .option('-a, --amount <amout>', 'mint amount', '1000000000000000000')
         .action(async (options) => {
             await lzController.mint("cube", options.amount)
         });
-    
+
     program.parse();
 }
 

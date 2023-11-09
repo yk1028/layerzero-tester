@@ -22,21 +22,20 @@ ts-node src/index.ts -h
   ``` shell
   ts-node src/index.ts send <source chain> <destination chain> [-a amount]
   ```
-  - `cube`에서 보내거나 `cube`로 보내는 전송만 가능
-  - ex. `cube` -> other chain, other chain -> `cube`
-  - `-a` 옵션으로 amount 지정 가능
-  
+  - `cube`에서 보내거나 `cube`로 보내는 전송만 가능 ( ex. `cube` -> `other chain` / `other chain` -> `cube`)
+  - `-a, --amount <amount>` amount 지정 가능
+  - `-t, --to <address>` target address 지정 가능
 
 - mint
   ``` shell
   ts-node src/index.ts mint [-a amount]
   ```
   - `cube` 에서만 mint 가능
-  - -a 옵션으로 minting amount 설정 가능 (defualt: 1.0 XLPMT) 
+  - `-a, --amount <amount>` minting amount 지정 가능 (defualt: 1.0 XLMT)
 
 - balance
   - chain별 등록된 signer의 native token과 oftv2 token balance 조회 기능
-  - `-c` option으로 chain을 지정하지 않으면 전체 chain balance 조회
+  - `-c, --chain <chain>` 조회 chain 지정 가능
   ``` shell
   ts-node src/index.ts balance [-c chain]
   ```
@@ -104,16 +103,17 @@ ts-node src/index.ts -h
 
 ## Todo
 - [x] add layerzero service
-    - [x] sendFrom
+    - [x] send
     - [x] balnace
     - [x] mint
 - [x] commands
-    - [x] sendFrom
+    - [x] send
     - [x] balance
     - [x] mint
 - [x] manage chain info and private key
     - [x] chain info
     - [x] private key
 - [x] docs
+- [x] send to target address
 - [ ] add new chain process
 - [ ] mainnet
