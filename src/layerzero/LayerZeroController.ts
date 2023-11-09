@@ -23,6 +23,10 @@ export class LayerZeroController {
             const info = LayerZeroController.CHAIN_INFO[chain]
             const privateKey = LayerZeroController.PRIVATEKY_INFO[chain]
 
+            if (!privateKey) {
+                throw Error(`LZ Tester: not found '${chain}' signer private key.`)
+            }
+
             this.chainServiceList[chain] = new LayerZeroService(
                 new ChainInfo(
                     chain,

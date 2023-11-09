@@ -22,5 +22,13 @@
         "lz_chain_id"           : "10102",
         "lz_endpoint_address"   : "0x6Fcb97553D41516Cb228ac03FdC8B9a0a9df04A1",
         "oftv2_address"         : "0x5B5d5a4a591322901e7a1AAFedeB6E78f40d5D0e"
+    },
+    "sepolia": {
+        "chain_id"              : "11155111",
+        "native_symbol"         : "SepoliaETH",
+        "rpc_url"               : "https://ethereum-sepolia.publicnode.com",
+        "lz_chain_id"           : "10161",
+        "lz_endpoint_address"   : "0xae92d5aD7583AD66E49A0c67BAd18F6ba52dDDc1",
+        "oftv2_address"         : "0x3e6601D35A60A327d2ee8AB1fB1abEFA2340F395"
     }
 }
