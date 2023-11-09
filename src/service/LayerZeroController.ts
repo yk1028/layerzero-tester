@@ -1,3 +1,5 @@
+const Web3 = require('web3')
+
 import { ChainInfo } from "./ChainInfo"
 import { LayerZeroService } from "./LayerZeroService";
 
@@ -7,7 +9,8 @@ type ChainServiceList = {
 
 export class LayerZeroController {
 
-    private static CHAIN_INFO = require("../../info/.chain_info.json")
+    private static CHAIN_INFO = require("../../info/chain_info.json")
+    private static PRIVATEKY_INFO = require("../../info/.private_key.json")
 
     private chainServiceList: ChainServiceList = {}
 
@@ -18,7 +21,8 @@ export class LayerZeroController {
     private initChainServiceList() {
         for (const chain in LayerZeroController.CHAIN_INFO) {
             const info = LayerZeroController.CHAIN_INFO[chain]
-
+            const privateKey = LayerZeroController.PRIVATEKY_INFO[chain]
+            
             this.chainServiceList[chain] = new LayerZeroService(
                 new ChainInfo(
                     chain,
@@ -28,8 +32,7 @@ export class LayerZeroController {
                     info["lz_chain_id"],
                     info["lz_endpoint_address"],
                     info["oftv2_address"],
-                    info["signer_privatekey"],
-                    info["signer_address"]
+                    privateKey
                 ))
         }
     }

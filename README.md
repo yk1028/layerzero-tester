@@ -10,9 +10,7 @@
 - [x] commands
     - [x] sendFrom
     - [x] balance
-- [ ] cube oftv2 mint
-- [ ] print format
-- [ ] error
+- [x] cube oftv2 mint
 - [ ] docs
 - [ ] mainnet
 

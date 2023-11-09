@@ -1,0 +1,26 @@
+{
+    "cube": {
+        "chain_id"              : "47",
+        "native_symbol"         : "XPLA",
+        "rpc_url"               : "https://cube-evm-rpc.xpla.dev/",
+        "lz_chain_id"           : "10216",
+        "lz_endpoint_address"   : "0x83c73Da98cf733B03315aFa8758834b36a195b87",
+        "oftv2_address"         : "0x7d4a974cCdd1b3378005d5D1001fDA8A06D96A2c"
+    },
+    "bsc-testnet": {
+        "chain_id"              : "97",
+        "native_symbol"         : "TBNB",
+        "rpc_url"               : "https://data-seed-prebsc-1-s1.binance.org:8545/",
+        "lz_chain_id"           : "10102",
+        "lz_endpoint_address"   : "0x6Fcb97553D41516Cb228ac03FdC8B9a0a9df04A1",
+        "oftv2_address"         : "0x31E88b7960d2d6B97f131be928Ab2878076C8f52"
+    },
+    "fuji": {
+        "chain_id"              : "97",
+        "native_symbol"         : "AVAX",
+        "rpc_url"               : "https://api.avax-test.network/ext/bc/C/rpc",
+        "lz_chain_id"           : "10102",
+        "lz_endpoint_address"   : "0x6Fcb97553D41516Cb228ac03FdC8B9a0a9df04A1",
+        "oftv2_address"         : "0x5B5d5a4a591322901e7a1AAFedeB6E78f40d5D0e"
+    }
+}
