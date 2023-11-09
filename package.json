@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc && pkg dist/index.js -o lzt -t node16-win",
+    "build": "tsc && pkg dist/index.js -o lzt",
     "start": "ts-node src/index.ts"
   },
   "bin": {

@@ -13,7 +13,7 @@ const main = async () => {
 
     program
         .name('lzt')
-        .version('1.0.0')
+        .version('0.0.1')
         .allowExcessArguments(false)
         .configureHelp({ subcommandTerm: (cmd) => cmd.name() + ' ' })
         .description('Send oftv2 token from source chain to desination chain by layerzero.')
