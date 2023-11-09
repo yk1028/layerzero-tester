@@ -21,4 +21,11 @@ export class LayerZeroPrinter {
         console.log(`native: ${Web3.utils.fromWei(nativeBalance, 'ether')} ${nativeSymbol.toUpperCase()}`)
         console.log(`oftv2 : ${Web3.utils.fromWei(oftv2Balance, 'ether')} ${oftv2Symbol.toUpperCase()}\n`)
     }
+
+    public static printMint(chainName: string, amount: string, oftv2Symbol: string, txResult: any) {
+        console.log(`[${chainName} mint]`)
+        console.log(`minting amount: ${Web3.utils.fromWei(amount, 'ether')} ${oftv2Symbol.toUpperCase()}`)
+        console.log(`oftv2 address: ${txResult.to}`)
+        console.log(`txHash: ${txResult.transactionHash}\n`)
+    }
 }

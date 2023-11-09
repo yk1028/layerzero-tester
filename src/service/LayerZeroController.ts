@@ -34,37 +34,35 @@ export class LayerZeroController {
         }
     }
 
-    async send(srcChain: string, dstChain: string, amount: string) {
-        const srcService = this.chainServiceList[srcChain]
-        const dstService = this.chainServiceList[dstChain]
-
-        if (!srcService) {
-            console.error("LZ Tester: not found source chain service.")
-            return
-        }
-
-        if (!dstService) {
-            console.error("LZ Tester: not found destination chain service.")
-            return
-        }
+    async send(srcChainName: string, dstChainName: string, amount: string) {
+        const srcService = this.getChainService(srcChainName)
+        const dstService = this.getChainService(dstChainName)
 
         await srcService.send(dstService, amount)
     }
 
-    async balance(chain: string) {
-        const chainService = this.chainServiceList[chain]
+    async balance(chainName: string) {
+        const chainService = this.getChainService(chainName)
 
-        if (!chainService) {
-            console.error("LZ Tester: not found chain service.")
-            return
-        }
-
-        await chainService.printSignerBalance()
+        await chainService.balance()
     }
 
     async balanceAll() {
         for(const service in this.chainServiceList) {
-            this.chainServiceList[service].printSignerBalance()
+            this.chainServiceList[service].balance()
         }
+    }
+
+    async mint(chainName: string, amount:string) {
+        const chainService = this.getChainService(chainName)
+
+        await chainService.mint(amount)
+    }
+
+    private getChainService(chainName: string): LayerZeroService{
+        if (!(chainName in this.chainServiceList)) {
+            throw Error(`LZ Tester: not found '${chainName}' chain service.`)
+        }
+        return this.chainServiceList[chainName]
     }
 }

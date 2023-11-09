@@ -38,6 +38,14 @@ const main = async () => {
                 await lzController.balance(options.chain)
             }
         });
+
+    program
+        .command('mint')
+        .description('Curruently mint is only available on \'cube\'.')
+        .option('-a, --amount <amout>', 'mint amount (default: 1.000000000000000000)', "1000000000000000000")
+        .action(async (options) => {
+            await lzController.mint("cube", options.amount)
+        });
     
     program.parse();
 }

@@ -20,6 +20,7 @@ export class LayerZeroService {
     }
 
     async send(dstChainService: LayerZeroService, amount: string) {
+
         if (this.gasPrice == null) {
             this.gasPrice = await this.web3.eth.getGasPrice();
         }
@@ -62,14 +63,14 @@ export class LayerZeroService {
 
         LayerZeroPrinter.printSend(this.chainInfo.chainName, dstChainService.chainInfo.chainName, txResult, remoteChainEstimateFee)
 
-        await this.printSignerBalance()
+        await this.balance()
     }
 
     private encodeToAddress(toAddress: string): string {
         return ethers.AbiCoder.defaultAbiCoder().encode(["address"], [toAddress])
     }
 
-    public async printSignerBalance() {
+    public async balance() {
         const nativeBalance = await this.web3.eth.getBalance(this.chainInfo.signerAddress)
         const oftv2Symbol = await this.oftv2Contract.methods.symbol().call();
         const oftv2Balance = await this.oftv2Contract.methods.balanceOf(this.chainInfo.signerAddress).call();
@@ -82,5 +83,31 @@ export class LayerZeroService {
             oftv2Symbol,
             oftv2Balance  
          );
+    }
+
+    public async mint(amount: string) {
+        if ("cube" !== this.chainInfo.chainName) {
+            throw Error("LZ Tester: mint is only available on 'cube'")
+        }
+
+        if (this.gasPrice == null) {
+            this.gasPrice = await this.web3.eth.getGasPrice();
+        }
+
+        const mint = this.oftv2Contract.methods.mint(this.chainInfo.signerAddress, amount)
+
+        const estimatedGas = await mint.estimateGas({ from: this.chainInfo.signerAddress })
+
+        const txResult = await mint.send({
+            from: this.chainInfo.signerAddress,
+            gas: estimatedGas,
+            gasPrice: this.gasPrice
+        })
+
+        const oftv2Symbol = await this.oftv2Contract.methods.symbol().call();
+
+        LayerZeroPrinter.printMint(this.chainInfo.chainName, amount, oftv2Symbol, txResult)
+
+        await this.balance()
     }
 }
