@@ -3,6 +3,7 @@ const { ethers } = require('ethers')
 
 import { ChainInfo } from "./ChainInfo"
 import { LayerZeroConstants } from "./LayerZeroConstants"
+import { LayerZeroPrinter } from "./LayerZeroPrinter"
 
 export class LayerZeroService {
 
@@ -19,17 +20,12 @@ export class LayerZeroService {
     }
 
     async send(dstChainService: LayerZeroService, amount: string) {
-        await this.sendFrom(
-            dstChainService.chainInfo.layerzeroChainId,
-            dstChainService.chainInfo.signerAddress,
-            amount
-        )
-    }
-
-    async sendFrom(remoteChainId: string, toAddress: string, amount: string) {
         if (this.gasPrice == null) {
             this.gasPrice = await this.web3.eth.getGasPrice();
         }
+
+        const remoteChainId = dstChainService.chainInfo.layerzeroChainId
+        const toAddress = dstChainService.chainInfo.signerAddress
 
         const sharedAmount = amount + "000000000000"
 
@@ -64,13 +60,27 @@ export class LayerZeroService {
             gasPrice: this.gasPrice
         })
 
-        console.log("remote chain estimated fee: " + remoteChainEstimateFee + "wei")
-        console.log("from: " + txResult.from)
-        console.log("to: " + txResult.to)
-        console.log("txHash: " + txResult.transactionHash)
+        LayerZeroPrinter.printSend(txResult, remoteChainEstimateFee)
+        await this.getSignerBalance()
+        await dstChainService.getSignerBalance()
     }
 
     private encodeToAddress(toAddress: string): string {
         return ethers.AbiCoder.defaultAbiCoder().encode(["address"], [toAddress])
+    }
+
+    public async getSignerBalance() {
+        const nativeBalance = await this.web3.eth.getBalance(this.chainInfo.signerAddress)
+        const oftv2Symbol = await this.oftv2Contract.methods.symbol().call();
+        const oftv2Balance = await this.oftv2Contract.methods.balanceOf(this.chainInfo.signerAddress).call();
+
+        LayerZeroPrinter.printBalance(
+            this.chainInfo.chainName,
+            this.chainInfo.signerAddress,
+            this.chainInfo.nativeSymbol,
+            nativeBalance,
+            oftv2Symbol,
+            oftv2Balance  
+         );
     }
 }
