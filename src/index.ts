@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-import { LayerZeroController } from "./service/LayerZeroController"
+import { LayerZeroController } from "./layerzero/LayerZeroController"
 import { Command } from "commander";
 
 const main = async () => {
