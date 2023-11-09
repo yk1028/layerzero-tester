@@ -4,8 +4,7 @@ import { LayerZeroController } from "./layerzero/LayerZeroController"
 import { Command } from "commander";
 
 const main = async () => {
-    const figlet = require("figlet");
-    console.log(figlet.textSync("LayerZero Tester"));
+    console.log("LayerZero Tester");
     console.log("\n");
 
     const program = new Command();
@@ -13,7 +12,7 @@ const main = async () => {
     const lzController = new LayerZeroController()
 
     program
-        .name('lztester')
+        .name('lzt')
         .version('1.0.0')
         .allowExcessArguments(false)
         .configureHelp({ subcommandTerm: (cmd) => cmd.name() + ' ' })

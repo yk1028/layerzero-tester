@@ -1,5 +1,5 @@
 # LayerZero testing tool
-layerzero를 통한 cube와 다른 chain간 간편 전송 테스트 도구, cube에서 발행한 OFTV2로 테스트 진행
+layerzero를 통한 cube와 다른 chain간 간편 전송 테스트 도구, [OFTV2](https://github.com/layerzero-labs/solidity-examples/blob/main/contracts/token/oft/v2/OFTV2.sol) contrat로 테스트 진행
 
 ## Private key
 - `info/.private_key.json` 위치에 chain별 **signer privatekey** 등록 필요
@@ -9,19 +9,21 @@ layerzero를 통한 cube와 다른 chain간 간편 전송 테스트 도구, cube
         "cube": "{cube signer private key}",
         "bsc-testnet": "{bsc-testnet signer private key}",
         "fuji": "{fuji signer private key}",
-        "sepolia": "sepolia signer private key"
+        "sepolia": "{sepolia signer private key}"
     }
     ```
+
 ## Getting start
 ``` shell
 npm i
-ts-node src/index.ts -h
+npm run build
+./lzt -h
 ```
 
 ## Commands
 - send
   ``` shell
-  ts-node src/index.ts send <source chain> <destination chain> [-a amount] [-t address]
+  ./lzt send <source chain> <destination chain> [-a amount] [-t address]
   ```
   - `cube`에서 보내거나 `cube`로 보내는 전송만 가능 ( ex. `cube` -> `other chain` / `other chain` -> `cube`)
   - `-a, --amount <amount>` amount 지정 가능 (defualt: 0.000001 XLMT)
@@ -29,7 +31,7 @@ ts-node src/index.ts -h
 
 - mint
   ``` shell
-  ts-node src/index.ts mint [-a amount]
+  ./lzt mint [-a amount]
   ```
   - `cube` 에서만 mint 가능
   - `-a, --amount <amount>` minting amount 지정 가능 (defualt: 1.0 XLMT)
@@ -39,7 +41,7 @@ ts-node src/index.ts -h
   - `-c, --chain <chain>` 조회 chain 지정 가능 (defualt: 전체 chains)
   - `-t, --to <address>` target address 지정 가능 (defualt: destination chain signer address)
   ``` shell
-  ts-node src/index.ts balance [-c chain] [-t address]
+  ./lzt balance [-c chain] [-t address]
   ```
 
 

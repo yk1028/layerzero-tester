@@ -5,13 +5,20 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "build": "tsc && pkg dist/index.js -o lzt -t node16-win",
     "start": "ts-node src/index.ts"
+  },
+  "bin": {
+    "app": "dist/index.js"
+  },
+  "pkg": {
+    "assets": "info/**"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "ethers": "^6.8.1",
+    "pkg": "^5.8.1",
     "typescript": "^5.2.2",
     "web3": "^1.7.4"
   },
